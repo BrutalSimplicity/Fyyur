@@ -1,0 +1,28 @@
+FROM python:3.8
+
+RUN pip install pipenv
+
+RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_9.0/ /' | tee /etc/apt/sources.list.d/shells:fish:release:3.list \
+    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_9.0/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/shells:fish:release:3.gpg > /dev/null
+RUN apt-get update && apt-get install -yf \
+    postgresql-client \
+    vim \
+    fish \
+    zsh
+
+RUN apt-get install -yf \
+    apt-transport-https \
+    ca-certificates \
+    gnupg-agent \
+    software-properties-common && \
+    apt-get update
+
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+RUN apt-get update && apt-get install -yf \
+    docker-ce-cli

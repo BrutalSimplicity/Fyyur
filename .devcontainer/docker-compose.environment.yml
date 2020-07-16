@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+
+  postgres:
+    image: postgres:12
+    volumes:
+      - ./var/lib/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: fyyur
+      POSTGRES_HOST_AUTH_METHOD: trust
+  
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.environment
+    ports:
+      - "5000:5000"
+    volumes:
+      - ..:/workspace:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: sleep infinity
+    environment:
+      FLASK_APP: app
+      FLASK_ENV: development

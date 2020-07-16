@@ -1,0 +1,27 @@
+{
+    "name": "App Development",
+    "workspaceFolder": "/workspace",
+    "dockerComposeFile": [
+        "./docker-compose.environment.yml"
+    ],
+    "service": "app",
+    "forwardPorts": [
+        5000, 5432
+    ],
+    "extensions": [
+        "ms-pyright.pyright",
+        "ms-python.python"
+    ],
+    "postCreateCommand": "PIPENV_VENV_IN_PROJECT=1 pipenv --three && pipenv install -d",
+    "settings": {
+        "terminal.integrated.shell.linux": "/usr/bin/fish",
+		"python.linting.pylintEnabled": false,
+		"python.linting.flake8Enabled": true,
+		"python.linting.enabled": true,
+		"python.linting.flake8Args": [
+			"--max-line-length=120",
+			"--ignore=E3,E128,W503"
+		],
+		"python.pythonPath": ".venv/bin/python"
+    }
+}
